@@ -69,9 +69,10 @@ void textColor(int letra, int fundo)
 
 void linhaCol(int lin, int col)
 {
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), (COORD){col - 1, lin - 1}); // coorddenada na tela
+    //Coordenadas da Tela.
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), (COORD){col - 1, lin - 1}); 
 
-    // funcao para deixar o cursor invisivel
+
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO info;
     info.dwSize = 100;
@@ -82,12 +83,12 @@ void box(int lin1, int col1, int lin2, int col2)
 {
     int i, j, tamlin, tamcol;
 
-    // achar o tamanho do box
+    //Encontrar o tamanho da caixa.
     tamlin = lin2 - lin1;
     tamcol = col2 - col1;
 
-    // Monta o Box
-
+    
+    //Montando a caixa.
     for (i = col1; i <= col2; i++)
     { // linhas
         linhaCol(lin1, i);
@@ -125,9 +126,9 @@ int menu(int lin1, int col1, int qtd, char lista[3][40])
 {
     int opc = 1, lin2, col2, linha, i, tamMaxItem, tecla;
 
-    // calcula as coordenadas
+    //Calcula as coordenadas.
     tamMaxItem = strlen(lista[0]);
-    // tamanho maximo do item
+    //Define o tamanho máximo do menu(HUD).
     for (i = 1; i < qtd; i++)
     {
         if (strlen(lista[i]) > tamMaxItem)
@@ -138,12 +139,12 @@ int menu(int lin1, int col1, int qtd, char lista[3][40])
     lin2 = lin1 + (qtd * 2 + 2);
     col2 = col1 + tamMaxItem + 4;
 
-    // Monta Tela
+    // Monta a Tela.
     textColor(WHITE, _BLUE);
     setlocale(LC_ALL, "C");
     box(lin1, col1, lin2, col2);
     setlocale(LC_ALL, "");
-    // laço das opcões
+    //Opções do menu em um laço.
     while (1)
     {
 
@@ -174,18 +175,17 @@ int menu(int lin1, int col1, int qtd, char lista[3][40])
         { // ENTER
             break;
         }
-        // Seta para cima
+        //Dois "ifs" que determinam a interação do usuário com a tela, a tecla 72 eleva o seletor de opções, porém a 80 o abaixa.
         else if (tecla == 72)
         { // se possivel seleciona o item anterior - seta para cima
             if (opc > 1)
                 opc--; // se opcao for maior que 1, pode voltar
         }
         else if (tecla == 80)
-        { // seta para baixo
+        { 
             if (opc < qtd)
                 opc++; // Se opcao for menor que quantidade de itens, posso avançar
 
-            // printf("tecla: %d ",opc);
         }
     }
     textColor(WHITE, BLACK);
